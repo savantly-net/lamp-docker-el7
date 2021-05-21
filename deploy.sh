@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPO_URL=savantly/lamp-docker-el7
+REPO_URL=savantly/lamp-docker:7.0
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $DIR
