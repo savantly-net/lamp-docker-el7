@@ -1,6 +1,7 @@
 FROM php:7.0.33-apache
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite && \
+	a2enmod headers
 
 # install the PHP extensions we need
 RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev && rm -rf /var/lib/apt/lists/* \
