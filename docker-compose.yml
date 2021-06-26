@@ -1,0 +1,9 @@
+version: "3"
+services:
+
+  webapp:
+    image: savantly/lamp-docker:7.0
+    build: .
+    container_name: lamp-docker
+    ports:
+      - 80:80

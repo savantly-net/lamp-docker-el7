@@ -1,7 +1,8 @@
-FROM php:7.0.33-apache
+FROM php:7.0.33-fpm
 
-RUN a2enmod rewrite && \
-	a2enmod headers
+RUN apt-get update && apt-get install -y apache2 libapache2-mod-fcgid
+
+RUN a2enmod rewrite headers actions fcgid alias proxy_fcgi
 
 # install the PHP extensions we need
 RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev && rm -rf /var/lib/apt/lists/* \
@@ -10,7 +11,7 @@ RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev && rm -rf /var/l
 RUN docker-php-ext-install mysqli
 
 # Install
-RUN apt-get update 	&& apt-get install -y --no-install-recommends curl wget unzip git vim nano \
+RUN apt-get update && apt-get install -y --no-install-recommends curl wget unzip git vim nano \
 iproute python-setuptools hostname inotify-tools \
 python-meld3 python-pip
 
@@ -28,3 +29,18 @@ RUN apt-get install -y --no-install-recommends mysql-server software-properties-
 
 # Install Memcached
 RUN apt-get install -y --no-install-recommends memcached;
+
+COPY --chown=www-data:www-data config/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY config/fpm/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY config/fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
+
+COPY config/php/* /usr/local/etc/php/
+
+COPY --chown=www-data:www-data config/test/* /var/www/html/
+
+COPY docker-entrypoint.sh /entrypoint.sh
+
+# ENTRYPOINT resets CMD
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["php-fpm"]
+#CMD ["/usr/sbin/apachectl","-DFOREGROUND"]
