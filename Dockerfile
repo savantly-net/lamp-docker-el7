@@ -39,6 +39,8 @@ COPY config/php/* /usr/local/etc/php/
 COPY --chown=www-data:www-data config/test/* /var/www/html/
 
 COPY docker-entrypoint.sh /entrypoint.sh
+# delete the placeholder index page
+RUN rm /var/www/html/index.html
 
 # ENTRYPOINT resets CMD
 ENTRYPOINT ["/entrypoint.sh"]

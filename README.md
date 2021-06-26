@@ -20,8 +20,6 @@ Example -
 FROM savantly/lamp-docker:7.0
 # copy the site
 COPY --chown=www-data:www-data src /var/www/html
-# remove the default index page, so the php page takes precendence
-RUN rm /var/www/html/index.html
 ```
 
 Complex Example -  
@@ -42,8 +40,6 @@ RUN pecl install dbase
 
 # copy the site
 COPY --chown=www-data:www-data src /var/www/html
-# remove the default index page, so the php page takes precendence
-RUN rm /var/www/html/index.html
 
 # install another php.ini 
 # since the conf.d is search alphabetically, renaming it so it's applied last
