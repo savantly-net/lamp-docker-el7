@@ -27,8 +27,8 @@ RUN apt-get install -y --no-install-recommends mysql-server software-properties-
 #RUN add-apt-repository ppa:ondrej/php && \
 # apt-get update && apt-get install php-mysql
 
-# Install Memcached
-RUN apt-get install -y --no-install-recommends memcached;
+# Install Memcached and sendmail
+RUN apt-get install -y --no-install-recommends memcached
 
 COPY --chown=www-data:www-data config/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY config/fpm/php-fpm.conf /usr/local/etc/php-fpm.conf
