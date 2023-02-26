@@ -7,9 +7,9 @@ Preconfigured with -
 - php-fpm
 - apache
 
-Available on Dockerhub as `savantly/lamp-docker:7.0`  
+Available on Dockerhub as `savantly/lamp-docker:8.0`  
 
-`docker run -p 80:80 savantly/lamp-docker:7.0`  
+`docker run -p 80:80 savantly/lamp-docker:8.0`  
 
 To use, create your own `Dockerfile` and extend this docker image.  
 Copy your html/php into the `/var/www/html` directory.  
@@ -17,7 +17,7 @@ Copy your html/php into the `/var/www/html` directory.
 Example -  
 
 ```yaml
-FROM savantly/lamp-docker:7.0
+FROM savantly/lamp-docker:8.0
 # copy the site
 COPY --chown=www-data:www-data src /var/www/html
 ```
@@ -25,7 +25,7 @@ COPY --chown=www-data:www-data src /var/www/html
 Complex Example -  
 
 ```yaml
-FROM savantly/lamp-docker:7.0
+FROM savantly/lamp-docker:8.0
 
 # install ssh2 extension for php
 RUN apt-get install -y \

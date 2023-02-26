@@ -1,4 +1,4 @@
-FROM php:7.0.33-fpm
+FROM php:8-fpm
 
 RUN apt-get update && apt-get install -y apache2 libapache2-mod-fcgid
 
@@ -6,23 +6,20 @@ RUN a2enmod rewrite headers actions fcgid alias proxy_fcgi
 
 # install the PHP extensions we need
 RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev && rm -rf /var/lib/apt/lists/* \
-	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
+	&& docker-php-ext-configure gd \
 	&& docker-php-ext-install gd
-RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
 # Install
 RUN apt-get update && apt-get install -y --no-install-recommends curl wget unzip git vim nano \
-iproute python-setuptools hostname inotify-tools \
-python-meld3 python-pip
+iproute2 python-setuptools hostname inotify-tools \
+python3-pip
 
 # Install Python and Supervisor
 RUN apt-get install -y --no-install-recommends python-setuptools
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Install MySql client
-RUN apt-get install -y --no-install-recommends mysql-server software-properties-common
 
 #RUN add-apt-repository ppa:ondrej/php && \
 # apt-get update && apt-get install php-mysql
